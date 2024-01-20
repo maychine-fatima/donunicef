@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-    IonButton,
-    IonButtons,
+  IonButton,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -9,7 +8,6 @@ import {
   IonCardTitle,
   IonCol,
   IonContent,
-  IonFooter,
   IonGrid,
   IonHeader,
   IonIcon,
@@ -20,15 +18,38 @@ import {
 } from "@ionic/react";
 import { fetchDataOrganizations } from "../../services/dataService";
 import { Page } from "./styles";
-import { heart, heartOutline } from "ionicons/icons";
+import { heartOutline } from "ionicons/icons";
+// import { useWeb3 } from "../../services/web3Context";
+// import { ethers } from "ethers"; // Add this import statement
 
 const OrganizationsPage: React.FC = () => {
+//   const { active, account, provider } = useWeb3();
   const [listOrganizations, setListOrganizations] = useState([]);
 
   const handleFetchListOrganizations = async () => {
     const data = await fetchDataOrganizations();
     setListOrganizations(data);
   };
+
+  const handleSendTransaction = async () => {
+    // if (!active || !provider) {
+    //   console.error("Web3 not active or provider not available");
+    //   return;
+    // }
+
+    // try {
+    //   // Example: Sending a transaction
+    //   const tx = await provider.getSigner().sendTransaction({
+    //     to: "0xRecipientAddress", // Replace with the recipient address
+    //     value: ethers.utils.parseEther("0.1"), // Replace with the amount in Ether
+    //   });
+
+    //   console.log("Transaction sent:", tx);
+    // } catch (error) {
+    //   console.error("Error sending transaction:");
+    // }
+  };
+
   useEffect(() => {
     handleFetchListOrganizations();
   }, []);
@@ -57,18 +78,21 @@ const OrganizationsPage: React.FC = () => {
                   </IonCardHeader>
                   <IonCardContent>
                     <IonCardSubtitle>
-                      {item.country}  {item.city ? `/ ${item.city}` : ''}
+                      {item.country} {item.city ? `/ ${item.city}` : ""}
                     </IonCardSubtitle>
                     {item.description}
                   </IonCardContent>
                   <IonRow className="footer-card">
-                        <IonCol>
-                        <IonButton>
+                    <IonCol>
+                      <IonButton
+                        onClick={handleSendTransaction}
+                        // disabled={!active || !account}
+                      >
                         <IonIcon aria-hidden="true" icon={heartOutline} />
-                            donate
-                        </IonButton>
-                        </IonCol>
-                    </IonRow>
+                        donate
+                      </IonButton>
+                    </IonCol>
+                  </IonRow>
                 </IonCard>
               </IonCol>
             ))}

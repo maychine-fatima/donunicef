@@ -2,6 +2,7 @@ import { IonPage } from "@ionic/react";
 import styled from "styled-components";
 
 export const Page = styled(IonPage)`
+    --background: #fff;
   .header {
     --background: #1cace4;
     color: white;
